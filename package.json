@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --exec ts-node -- ./src/server.ts",
-    "dev-sls": "sls offline --stage dev",
     "build": "tsc -noEmit && esbuild src/server.ts --bundle --platform=node --target=node12.0 --external:express --external:pg-native --external:typeorm --outfile=dist/app.js",
     "serve": "node dist/app.js",
     "resume": "npm run build && npm run serve",
@@ -18,15 +17,12 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "morgan": "^1.10.0",
-    "serverless-http": "^2.7.0",
-    "serverless-offline": "^6.8.0",
     "typeorm": "^0.2.31"
   },
   "devDependencies": {
     "@types/node": "^14.14.25",
     "esbuild": "^0.8.56",
     "nodemon": "^2.0.7",
-    "serverless-esbuild": "^1.8.2",
     "ts-node": "^9.1.1",
     "typeorm-model-generator": "^0.4.4",
     "typescript": "^4.1.3"
