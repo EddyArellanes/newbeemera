@@ -1,0 +1,48 @@
+# serverless.yml
+
+service: beemera
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage, 'dev'}
+  region: us-west-2
+  timeout: 30
+
+plugins:  
+  - serverless-esbuild  
+  - serverless-offline
+
+custom:
+  esbuild:    
+    bundle: true
+    minify: true
+    external:
+      - express
+      - pg-native
+      - typeorm
+  
+  allowed-headers:
+  - Content-Type
+  - X-Amz-Date
+  - Access-Control-Allow-Origin
+  - Authorization
+  - X-Api-Key
+  - X-Amz-Security-Token
+  - X-Amz-User-Agent
+  - cache-Control
+  - content-language
+  - content-length
+
+functions:
+  wallets:
+    handler: src/routes/wallets.walletsSeverless
+    events:
+      - http:
+          path: 'wallets'
+          method: ANY
+          cors:
+            origin: "*"
+            headers: ${self:custom.allowed-headers}
+            allowCredentials: true
+          private: false          
